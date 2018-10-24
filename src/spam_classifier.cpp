@@ -57,13 +57,13 @@ int main()
 	double total_words_ham = 0;
 
 	for(int i=0; i<57; i++)
-    {
+    	{
 		total_words_spam += num_words_spam[i];
 		total_words_ham += num_words_ham[i];
 	}
 
 	for(int i=0;i<57;i++)
-    {
+    	{
 		word_probability_spam[i] = log(num_words_spam[i]/total_words_spam);
 		word_probability_ham[i] = log(num_words_ham[i]/total_words_ham);
 	}

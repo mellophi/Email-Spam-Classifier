@@ -1,0 +1,47 @@
+* Data resource:
+*    This program uses the Spam Data Set from UCI machine learning repository.
+*    http://archive.ics.uci.edu/ml/datasets/Spambase
+*      The database has 4601 emails. Each email is one line in the data file. 
+*    Each line has 58 numbers, where the first 57 numbers are the frequencies 
+*    of a fixed set of 57 words in this corresponding email. The last number
+*    (0 or 1) represents if the email is a spam (0) or good (or ham, 1) email.
+*    The traning set (traing_set.data) has 4201 emails, with 1613 hams and 2588
+*	 spams. The test set (test_set.data) has 400 emails, with 200 hams and 
+*	 spams each.  
+*
+* Algorithm:
+*	  This program uses the Naive Bayesian algorithm to build the spam filter, 
+*	and use 4401 labeled (spam/ham as 0/1) emails to train the filter. Then it
+*	uses 400 labeled emails as the test set, predicts spam/ham of each email, 
+*	and compare the result with the label. The accuracy of this filter on the 
+*	test set is about 78%.
+*
+*	  Let X be a vector with 57 entries, representing the frequency of a fixed
+*	set of 57 words in an email. Let Y be the label of an email, Y = spam or ham.
+*	Given X, the algorithm predicts the probability of it being spam or ham, i.e.
+*	P(Y|X).
+*
+*	  The Bayesian formula says P(Y|X) = P(X|Y)*P(Y)/P(X), so this means 
+*	    P(spam|X)/P(ham|X) = (P(X|spam)*P(spam))/(P(X|ham)*P(ham))
+*	The email is considered spam, if the ratio is greater than 1, and ham if not.
+*	  In the formula, 
+*	(1) P(spam) = #spams/#all_emails, P(ham) = #hams/#all_emails 
+*	(2) P(X|spam) = product of P(word i|spam)^(#occurrance of word i in X) 
+*			= prod_{i=1 to 57} P(word i|spam)^X[i], 
+*		here 
+*		P(word i|spam) = #word_i_occurrence_in_all_spams/#all_words_in_spams
+*	(3) Similarly, P(X|ham) = prod_{i=1 to 57} P(word i|ham)^X[i], and 
+*		P(word i|ham) = #word_i_occurrence_in_all_hams/#all_words_in_hams
+*	
+*	  When applying the formula, we make the following two modifications.
+*	(1) Since the involved probabilities are generally very tiny numbers, using
+*		the original formula may cause big a computational error.
+*		To minimize the error, we use the log version, i.e. we use
+*		log(P(spam|X)/P(ham|X)) = ( sum_{i=1 to 57} X[i]*(log(P(word i|spam)) 
+*			- log(P(word i|ham))) ) + log(P(spam)) - log(P(ham))
+*	(2) If all spam (resp. ham) emails don't have word i, then 
+*		P(word i|spam) = 0 (resp. P(word i|ham) = 0), this become problematic 
+*		in the above formula. To resolve this, we add a small number (call it 
+*		OFF_SET) to the frequency of each word in each email. For the data sets
+*		we use in this program, we choose OFF_SET = 1/4000. 
+******************************************************************************/

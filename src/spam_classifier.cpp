@@ -118,6 +118,6 @@ int main()
 	std::cout<<"Spam predicted as ham: "<<spam_predict_as_ham<<"\n";
 	std::cout<<"Ham predicted as spam: "<<ham_predict_as_spam<<"\n";
 	std::cout<<"The prediction accurary is: "<<(ham_predict_as_ham+spam_predict_as_spam)*1.0/num_test_email*100<<" percents\n";
-	//system("pause");
+	system("pause");
 	return 1;
 }

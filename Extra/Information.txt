@@ -14,7 +14,7 @@
 *	and use 4401 labeled (spam/ham as 0/1) emails to train the filter. Then it
 *	uses 400 labeled emails as the test set, predicts spam/ham of each email, 
 *	and compare the result with the label. The accuracy of this filter on the 
-*	test set is about 78%.
+*	test set is about 22%.
 *
 *	  Let X be a vector with 57 entries, representing the frequency of a fixed
 *	set of 57 words in an email. Let Y be the label of an email, Y = spam or ham.
@@ -44,4 +44,13 @@
 *		in the above formula. To resolve this, we add a small number (call it 
 *		OFF_SET) to the frequency of each word in each email. For the data sets
 *		we use in this program, we choose OFF_SET = 1/4000. 
+*
+*
+*Time Complexity:
+*
+*   Let N = number of training examples, d = dimensionality of the features and c = number of classes.
+*   Then training has complexities:
+*   Naive Bayes is O(Nd), all it needs to do is computing the frequency of every feature value di for each class.
+*   Testing complexities:
+*   Naive Bayes is in O(cd) since you have to retrieve d feature values for each of the c classes
 ******************************************************************************/
